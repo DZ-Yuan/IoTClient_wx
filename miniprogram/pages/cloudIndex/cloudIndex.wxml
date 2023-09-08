@@ -1,0 +1,58 @@
+<!--pages/cloudIndex/cloudIndex.wxml-->
+<view style="height: 100%; width: 100%;">
+    <view style="text-align: center; margin: 10px 0;">Cloud Server</view>
+    <!-- auth -->
+    <view class="border-simple" style="display: flex; margin: 10px 10px; box-sizing: border-box;">
+        <!-- dev info -->
+        <view style="display: flex; flex-direction: column; margin-left: 4px; flex-grow: 1;">
+            <text>Cloud IP: {{cloud_ip}}</text>
+            <text>Cloud Port: {{cloud_port}}</text>
+            <text>Name: {{dev_info.name}}</text>
+            <text>Online: {{dev_info.is_online}} </text>
+        </view>
+
+        <!-- btn -->
+        <view style="width: 80px; display: flex; flex-direction: column; max-width: 150px; margin-left: 4px; flex-grow: 1;">
+            <button type="primary" plain="true" size="mini" class="btn-1" style="width: 100px;" bindtap="connect2Cloud">Connect</button>
+            <button type="primary" plain="true" size="mini" class="btn-1" style="width: 100px;" bindtap="pullDevInfoList">Update</button>
+        </view>
+    </view>
+
+    <!-- separated line -->
+    <view style="display: flex;flex-direction: row; margin: 0px 16px; align-items: center;">
+        <view style="width: 30px; height: 0px; margin: 0px 8px; border-style: solid; border-width: 1px;"></view>
+        <view style="margin: 4px 0px; min-width: 50px;">Device list</view>
+        <view style="width: 100px; height: 0px; margin: 0px 8px; flex-grow: 1;border-style: solid; border-width: 1px;"></view>
+    </view>
+
+    <!-- Dev list -->
+    <view class="" style="min-height: 500px;">
+        <view class="mblock" style="margin: 2px 5px;" wx:for="{{dev_list}}">
+            <view data-dev-id="{{item.id}}" class="device-list-item" style="padding: 6px;" bindtap="jumpToDevDetail">
+                <!-- pic -->
+                <view style="min-width: 100px; margin: 2px 5px; border-radius: 8px; box-sizing: border-box; background-color: #448AFF;">
+                </view>
+                <!-- info -->
+                <view style="display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; margin-left: 6px;white-space: pre; overflow: scroll;">
+                    <text style="display: block;" decode="{{true}}">Device-ID: {{item.id}}</text>
+                    <text style="display: block;" decode="{{true}}">Device-Name: {{item.name}}</text>
+                    <text style="display: block;" decode="{{true}}">Online: {{item.is_online}}</text>
+                </view>
+            </view>
+        </view>
+        <!-- tmp -->
+        <view class="mblock" style="margin: 10px 5px;">
+            <view data-dev-id="{{item.id}}" class="device-list-item" style="padding: 6px;" bindtap="jumpToDevDetail">
+                <!-- pic -->
+                <view style="min-width: 100px; margin: 2px 5px; border-radius: 8px; box-sizing: border-box; background-color: #448AFF;">
+                </view>
+                <!-- info -->
+                <view style="display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; margin-left: 6px;white-space: pre; overflow: scroll;">
+                    <text style="display: block;" decode="{{true}}">Device-ID: {{item.id}}</text>
+                    <text style="display: block;" decode="{{true}}">Device-Name: sdfsdfsdfsdfsd{{item.name}}</text>
+                    <text style="display: block;" decode="{{true}}">Online: {{item.is_online}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

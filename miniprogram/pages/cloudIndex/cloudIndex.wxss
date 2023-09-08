@@ -1,0 +1,33 @@
+/* pages/cloudIndex/cloudIndex.wxss */
+page {
+    /* background-color: #B3E5FC; */
+}
+
+.btn-1 {
+    margin: 5px;
+}
+
+.border-simple {
+    border-style: solid;
+    border-width: 1px;
+}
+
+.device-list-item {
+    max-height: 100px;
+    display: flex;
+}
+
+.mblock {
+    border: none;
+    -webkit-border-radius: 14px;
+    border-radius: 14px;
+    /* font: normal 15px Arial, Helvetica, sans-serif; */
+    color: rgb(32, 32, 32);
+    text-align: center;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    background: rgba(124, 167, 233, 0.418);
+    -webkit-box-shadow: 5px 5px 6px -1px rgba(0, 0, 0, 0.4);
+    box-shadow: 5px 5px 6px -1px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,4 @@
+<!-- seflComponents/mblock/mblock.wxml -->
+<view class="inner">
+  <slot></slot>
+</view>

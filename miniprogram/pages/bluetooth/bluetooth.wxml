@@ -1,0 +1,40 @@
+<!--pages/bluetooth/bluetooth.wxml-->
+<view style="height: 100%; width: 100%;">
+    <view style="text-align: center; margin: 10px 0;">Bluetooth Setting</view>
+    <!-- auth -->
+    <view style="display: flex; margin: 10px 10px; box-sizing: border-box;">
+        <!-- dev info -->
+        <view style="display: flex; flex-direction: column; margin-left: 4px; flex-grow: 1;">
+            <text style="margin-bottom: 5px;">Dev-Name: </text>
+            <text style="margin-bottom: 5px;">Addr: </text>
+            <text style="margin-bottom: 5px;">RSSI: </text>
+            <!-- <text>Online:  </text> -->
+        </view>
+
+        <!-- btn -->
+        <view style="width: 50px; display: flex; flex-direction: column; max-width: 150px; margin-left: 4px; flex-grow: 1;">
+            <button type="primary" plain="true" size="mini" class="btn-1" bindtap="searchBTDev">Search</button>
+            <button type="primary" plain="true" size="mini" class="btn-1" bindtap="pullDevInfoList">None</button>
+        </view>
+    </view>
+
+    <view style="margin: 4px 20px;">BT Device List</view>
+
+    <!-- Dev list -->
+    <mblock style="margin: 10px;" wx:for="{{dev_list}}">
+        <view data-dev-uid="{{item.deviceId}}" class="device-list-item" style="padding: 6px;" bindtap="connectBTDev">
+            <!-- pic -->
+            <view style="width: 80px; margin: 2px 5px; box-sizing: border-box; background-color: lawngreen;">
+            </view>
+            <!-- info -->
+            <view style="display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; margin-left: 6px;">
+                <text style="display: block;" decode="{{true}}">Device-ID: {{item.deviceId}}</text>
+                <text style="display: block;" decode="{{true}}">Device-Name: {{item.name}}</text>
+                <text style="display: block;" decode="{{true}}">RSSI: {{item.RSSI}}</text>
+            </view>
+
+        </view>
+    </mblock>
+
+
+</view>

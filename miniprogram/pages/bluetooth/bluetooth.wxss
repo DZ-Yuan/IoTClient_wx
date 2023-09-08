@@ -1,0 +1,5 @@
+/* pages/bluetooth/bluetooth.wxss */
+
+.btn-1 {
+    margin: 5px;
+}

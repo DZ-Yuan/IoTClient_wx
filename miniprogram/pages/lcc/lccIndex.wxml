@@ -1,0 +1,60 @@
+<!--pages/tPage/tPage.wxml-->
+
+<view class="top_bg">
+    <!-- title -->
+    <view class="title" style="text-align: center;">Local Control</view>
+
+    <!-- control panel -->
+    <mblock style=" position: relative;">
+
+        <!-- <text style="position: absolute; left: 52rpx; top: -10px; width: 85rpx; height: 57rpx; display: block; box-sizing: border-box">INFO</text> -->
+
+        <view class="control-panel">
+            <!-- info -->
+            <view class="control-panel-content" style="width: 60%;">
+                <text class="text-1">IP addr: {{ip_addr}} </text>
+                <text class="text-1">Status: {{status_text}}</text>
+                <text class="text-1">Other: N/A </text>
+            </view>
+
+            <view class="vertical-split-line" style="flex-shrink: 1;"></view>
+
+            <!-- control button -->
+            <view class="control-panel-content" style="width: 40%; justify-content: flex-start; flex-shrink: 0;">
+                <button style="font: initial; width: initial; height: initial; margin: 0 10px;" bindtap="sendDiscoverMsg">{{search_btn_text}}</button>
+                <text bindtap="onTapCheck">Placeholder</text>
+            </view>
+
+        </view>
+
+        <!-- <text decode="{{true}}"> SSID: {{ssid}} &nbsp;&nbsp;&nbsp; IP: {{ip_addr}}</text> -->
+    </mblock>
+
+    <!-- Split line -->
+    <view style="margin: 10px 20px;">Device List</view>
+
+    <!-- Devices -->
+    <mblock style="margin: 10px;" wx:for="{{devices}}">
+        <view data-dev-id="{{item.id}}" class="device-list-item" style="padding: 6px;" bindtap="jumpToDevDetail">
+            <!-- pic -->
+            <view style="width: 80px; margin: 2px 5px; box-sizing: border-box; background-color: lawngreen;">
+            </view>
+            <!-- info -->
+            <view style="display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; margin-left: 6px;">
+                <text style="display: block;" decode="{{true}}">Device Name: {{item.name}}</text>
+                <text style="display: block;" decode="{{true}}">Online: {{item.is_online}}</text>
+                <text style="display: block;" decode="{{true}}">IP Address: {{item.ip_addr}}</text>
+            </view>
+
+        </view>
+    </mblock>
+
+    <!-- botton menu -->
+    <!-- <view class="menu">
+    <button class="menu_button" style="width: 100%;" bindtap="onButtonTap">Connect Server</button>
+    <button class="menu_button" style="width: 100%;" bindtap="sendDiscoverMsg">{{btn_text}}</button>
+    <button class="menu_button" style="width: 100%;" bindtap="onButtonTap">C</button>
+    <button class="menu_button" bindtap="onButtonTap">D</button>
+  </view> -->
+
+</view>
