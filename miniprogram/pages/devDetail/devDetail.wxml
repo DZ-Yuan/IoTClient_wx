@@ -24,20 +24,30 @@
 
     <!-- control opt -->
     <view style="display: flex; flex-direction: row; overflow: auto; margin: 0px 10px; border-style: solid; border-width: 1px;">
-        <!-- left pin -->
+        <!-- left pin set -->
+        <view style="width: 50%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+            <button type="{{item.stat? 'primary' : 'default' }}" disabled="{{!item.valid}}" plain="true" size="mini" class="btn-1" data-pin="{{index}}" bindtap="onTapPinBtn" wx:for="{{left_pin_stat}}">Pin_{{index}}</button>
+        </view>
+
+        <!-- right pin set -->
         <view style="width: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <button type="{{item.stat? 'primary' : 'default' }}" disabled="{{!item.valid}}" plain="true" size="mini" class="btn-1" data-right="1" data-pin="{{index}}" bindtap="onTapPinBtn" wx:for="{{right_pin_stat}}">Pin_{{index + MAX_PIN/2}}</button>
+        </view>
+
+        <!-- left pin -->
+        <!-- <view style="width: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <button type="{{pin_btn_stat[18]}}" plain="true" size="mini" class="btn-1" data-pin="18" bindtap="onTapPinBtn">Pin_18</button>
             <button type="{{pin_btn_stat[2]}}" plain="true" size="mini" class="btn-1" data-pin="2" bindtap="onTapPinBtn">Pin_02</button>
             <button type="primary" plain="true" size="mini" class="btn-1">Pin_xx</button>
-            <button type="primary" plain="true" size="mini" class="btn-1">Pin_xx</button>
-        </view>
+            <button type="primary" plain="true" size="mini" class="btn-1" disabled="true">Pin_x</button>
+        </view> -->
         <!-- right pin -->
-        <view style="width: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <!-- <view style="width: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <button type="{{pin_btn_stat[19]}}" plain="true" size="mini" class="btn-1" data-pin="19" bindtap="onTapPinBtn">Pin_19</button>
             <button type="primary" plain="true" size="mini" class="btn-1">Pin_xx</button>
             <button type="primary" plain="true" size="mini" class="btn-1">Pin_xx</button>
             <button type="primary" plain="true" size="mini" class="btn-1">Pin_xx</button>
-        </view>
+        </view> -->
 
     </view>
 </view>

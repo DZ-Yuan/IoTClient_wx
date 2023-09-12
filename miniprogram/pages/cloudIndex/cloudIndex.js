@@ -77,7 +77,10 @@ Page({
                     // islive
                     dev_info.is_online = dv.getUint8(offset);
                     offset += 1;
-
+                    dev_info.pin_valid = new Uint8Array(dv.buffer, offset, offset + 3);
+                    offset += 4;
+                    dev_info.pin_set = new Uint8Array(dv.buffer, offset, offset + 3);
+                    offset += 4;
 
                     if (!is_exist)
                         this.data.dev_list.push(dev_info);

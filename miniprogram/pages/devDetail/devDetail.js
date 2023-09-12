@@ -10,9 +10,17 @@ Page({
      */
     data: {
         dev_info: {},
-
+        MAX_PIN: _G.MAX_PIN,
         //Pin button status
-        pin_btn_stat: new Array(20).fill("default"),
+        left_pin_stat: Array(_G.MAX_PIN / 2).fill({
+            valid: false,
+            lv: 0
+        }),
+
+        right_pin_stat: Array(_G.MAX_PIN / 2).fill({
+            valid: true,
+            lv: 0
+        }),
     },
 
     // XXX: 只发送修改的Pin还是全部都发？
@@ -56,39 +64,80 @@ Page({
         this.updatePinBtn(pin, lv);
     },
 
-    updatePinBtn(pin, lv) {
-        var pin_arr = this.data.pin_btn_stat;
+    updatePinBtn(pin, side, lv) {
+        var left_pin_arr = this.data.left_pin_stat;
+        var right_pin_arr = this.data.left_pin_stat;
 
-        if (pin && lv) {
-            if (lv)
-                pin_arr[pin] = "primary";
-            else
-                pin_arr[pin] = "default";
+        if (side == "left") {
+            left_pin_arr[pin].stat = lv ? "primary" : "default";
+            this.setData({
+                left_pin_stat: left_pin_arr,
+            });
         } else {
-            var set = this.data.dev_info.pin_set;
-            for (var i = 0; i < set.length; ++i) {
-                if (set[i])
-                    pin_arr[i] = "primary";
-                else
-                    pin_arr[i] = "default";
-            }
+            right_pin_arr[pin].stat = lv ? "primary" : "default";
+            this.setData({
+                right_pin_stat: right_pin_arr
+            });
+        }
+    },
+
+    initPinStat() {
+        var valid_set = this.data.dev_info.pin_valid;
+        var set = this.data.dev_info.pin_set;
+
+        var pin_arr = this.data.left_pin_stat;
+        // left pin
+        for (var i = 0; i < _G.MAX_PIN / 2; ++i) {
+            var val = _G.getBitVal(valid_set, i)
+            if (val)
+                pin_arr[i] = {
+                    valid: true,
+                    stat: _G.getBitVal(set, i),
+                };
+        }
+
+        //right pin
+        var offset = _G.MAX_PIN / 2;
+        pin_arr = this.data.right_pin_stat;
+        for (var i = offset; i < _G.MAX_PIN; ++i) {
+            var val = _G.getBitVal(valid_set, i)
+            if (val)
+                pin_arr[i - offset] = {
+                    valid: true,
+                    stat: _G.getBitVal(set, i),
+                };
         }
 
         this.setData({
-            pin_btn_stat: pin_arr
+            left_pin_stat: this.data.left_pin_stat,
+            right_pin_stat: this.data.right_pin_stat,
         });
     },
 
     onTapPinBtn(e) {
         var pin = e.currentTarget.dataset.pin;
-        console.log("Tap pin: " + pin);
+        var is_right_pin = e.currentTarget.dataset.right ? true : false
+
+        var pin_arr = this.data.left_pin_stat;
+
+        var real_pin = pin
+        if (is_right_pin) {
+            real_pin += this.data.MAX_PIN / 2;
+            pin_arr = this.data.right_pin_stat;
+        }
+
+        console.log("Tap pin: " + real_pin);
 
         var set = this.data.dev_info.pin_set;
-        var lv = !(set[pin] || 0);
-        this.setPinLevel(pin, lv);
+        var lv = !pin_arr[pin].lv;
+
+        // update pin set
+        this.data.dev_info.pin_set = _G.setBitVal(set, real_pin, lv);
+        // update pin arr
+        this.updatePinBtn(pin, is_right_pin ? "right" : "left", lv);
 
         //send control msg
-        this.sendControlMsg(pin, lv);
+        this.sendControlMsg(real_pin, lv);
     },
 
     /**
@@ -104,9 +153,9 @@ Page({
             this.setData({
                 dev_info: res.dev_info,
             });
-            this.updatePinBtn();
+            this.initPinStat();
             this.setData({
-                pin_btn_stat: this.data.pin_btn_stat,
+                left_pin_stat: this.data.left_pin_stat,
             });
         })
     },

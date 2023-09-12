@@ -49,7 +49,7 @@
                 <!-- info -->
                 <view style="display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; margin-left: 6px;white-space: pre; overflow: scroll;">
                     <text style="display: block;" decode="{{true}}">Device-ID: {{item.id}}</text>
-                    <text style="display: block;" decode="{{true}}">Device-Name: sdfsdfsdfsdfsd{{item.name}}</text>
+                    <text style="display: block;" decode="{{true}}">Device-Name: {{item.name}}</text>
                     <text style="display: block;" decode="{{true}}">Online: {{item.is_online}}</text>
                 </view>
             </view>
