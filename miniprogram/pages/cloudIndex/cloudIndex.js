@@ -77,10 +77,12 @@ Page({
                     // islive
                     dev_info.is_online = dv.getUint8(offset);
                     offset += 1;
-                    dev_info.pin_valid = new Uint8Array(dv.buffer, offset, offset + 3);
+                    dev_info.pin_valid = _G.bytearr2int(new Uint8Array(dv.buffer, offset, offset + 3), 4);
                     offset += 4;
-                    dev_info.pin_set = new Uint8Array(dv.buffer, offset, offset + 3);
+                    dev_info.pin_set = _G.bytearr2int(new Uint8Array(dv.buffer, offset, offset + 3), 4);
                     offset += 4;
+                    console.log("Check pin mask: ", dev_info.pin_valid);
+                    console.log("Check pin val: ", dev_info.pin_set);
 
                     if (!is_exist)
                         this.data.dev_list.push(dev_info);

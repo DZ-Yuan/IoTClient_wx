@@ -27,21 +27,7 @@
 
     <!-- Dev list -->
     <view class="" style="min-height: 500px;">
-        <view class="mblock" style="margin: 2px 5px;" wx:for="{{dev_list}}">
-            <view data-dev-id="{{item.id}}" class="device-list-item" style="padding: 6px;" bindtap="jumpToDevDetail">
-                <!-- pic -->
-                <view style="min-width: 100px; margin: 2px 5px; border-radius: 8px; box-sizing: border-box; background-color: #448AFF;">
-                </view>
-                <!-- info -->
-                <view style="display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; margin-left: 6px;white-space: pre; overflow: scroll;">
-                    <text style="display: block;" decode="{{true}}">Device-ID: {{item.id}}</text>
-                    <text style="display: block;" decode="{{true}}">Device-Name: {{item.name}}</text>
-                    <text style="display: block;" decode="{{true}}">Online: {{item.is_online}}</text>
-                </view>
-            </view>
-        </view>
-        <!-- tmp -->
-        <view class="mblock" style="margin: 10px 5px;">
+        <view class="mblock" style="margin: 10px 5px;" wx:for="{{dev_list}}">
             <view data-dev-id="{{item.id}}" class="device-list-item" style="padding: 6px;" bindtap="jumpToDevDetail">
                 <!-- pic -->
                 <view style="min-width: 100px; margin: 2px 5px; border-radius: 8px; box-sizing: border-box; background-color: #448AFF;">

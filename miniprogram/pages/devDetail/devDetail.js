@@ -18,12 +18,12 @@ Page({
         }),
 
         right_pin_stat: Array(_G.MAX_PIN / 2).fill({
-            valid: true,
+            valid: false,
             lv: 0
         }),
     },
 
-    // XXX: 只发送修改的Pin还是全部都发？
+    // TODO: 只发送修改的Pin还是全部都发？
     sendControlMsg(pin, lv) {
         // acknowledge
         var dev_info = this.data.dev_info;
@@ -66,15 +66,17 @@ Page({
 
     updatePinBtn(pin, side, lv) {
         var left_pin_arr = this.data.left_pin_stat;
-        var right_pin_arr = this.data.left_pin_stat;
-
-        if (side == "left") {
+        var right_pin_arr = this.data.right_pin_stat;
+        console.log("Check pin change: side ", side, " pin ", pin, " lv ", lv)
+        if (side == "L") {
             left_pin_arr[pin].stat = lv ? "primary" : "default";
+            left_pin_arr[pin].lv = lv;
             this.setData({
                 left_pin_stat: left_pin_arr,
             });
         } else {
             right_pin_arr[pin].stat = lv ? "primary" : "default";
+            right_pin_arr[pin].lv = lv;
             this.setData({
                 right_pin_stat: right_pin_arr
             });
@@ -85,10 +87,15 @@ Page({
         var valid_set = this.data.dev_info.pin_valid;
         var set = this.data.dev_info.pin_set;
 
+        console.log("Check pin mask: ", valid_set);
+        console.log("Check pin val: ", set);
+
         var pin_arr = this.data.left_pin_stat;
         // left pin
         for (var i = 0; i < _G.MAX_PIN / 2; ++i) {
             var val = _G.getBitVal(valid_set, i)
+            console.log("Check pin mask bit ", i, " : ", val);
+            console.log("Check pin val bit ", i, " : ", _G.getBitVal(set, i));
             if (val)
                 pin_arr[i] = {
                     valid: true,
@@ -101,6 +108,8 @@ Page({
         pin_arr = this.data.right_pin_stat;
         for (var i = offset; i < _G.MAX_PIN; ++i) {
             var val = _G.getBitVal(valid_set, i)
+            console.log("Check pin mask bit ", i, " : ", val);
+            console.log("Check pin val bit ", i, " : ", _G.getBitVal(set, i));
             if (val)
                 pin_arr[i - offset] = {
                     valid: true,
@@ -116,16 +125,19 @@ Page({
 
     onTapPinBtn(e) {
         var pin = e.currentTarget.dataset.pin;
-        var is_right_pin = e.currentTarget.dataset.right ? true : false
+        var is_right_pin = e.currentTarget.dataset.side == "R" ? true : false
 
+        // is left side
         var pin_arr = this.data.left_pin_stat;
-
         var real_pin = pin
+
         if (is_right_pin) {
+            // is right side
             real_pin += this.data.MAX_PIN / 2;
             pin_arr = this.data.right_pin_stat;
         }
 
+        console.log("is_right_pin: " + is_right_pin);
         console.log("Tap pin: " + real_pin);
 
         var set = this.data.dev_info.pin_set;
@@ -134,8 +146,7 @@ Page({
         // update pin set
         this.data.dev_info.pin_set = _G.setBitVal(set, real_pin, lv);
         // update pin arr
-        this.updatePinBtn(pin, is_right_pin ? "right" : "left", lv);
-
+        this.updatePinBtn(pin, is_right_pin ? "R" : "L", lv);
         //send control msg
         this.sendControlMsg(real_pin, lv);
     },
